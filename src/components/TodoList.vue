@@ -32,7 +32,7 @@
     <div class="extra-container">
       <div>
         <label>
-          <input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos"/>Check All
+          <input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos" />Check All
         </label>
       </div>
       <div>{{remaining}} items left</div>
@@ -51,13 +51,13 @@ export default {
       todos: [
         {
           id: 1,
-          title: "Finish Electron Recorder",
+          title: "Hack NASA using HTML",
           completed: false,
           editing: false,
         },
         {
           id: 2,
-          title: "Make Tailwind App",
+          title: "Finish this app",
           completed: false,
           editing: false,
         },
@@ -72,13 +72,12 @@ export default {
     },
   },
   computed: {
-    remaining(){
-      return this.todos.filter(todo=> !todo.completed).length;
+    remaining() {
+      return this.todos.filter((todo) => !todo.completed).length;
     },
-    anyRemaining(){
-      return this.remaining!=0;
-    }
-
+    anyRemaining() {
+      return this.remaining != 0;
+    },
   },
   methods: {
     addTodo() {
@@ -110,9 +109,9 @@ export default {
     removeTodo(index) {
       this.todos.splice(index, 1);
     },
-    checkAllTodos(){
-      this.todos.forEach((todo)=> todo.completed=event.target.checked);
-    }
+    checkAllTodos() {
+      this.todos.forEach((todo) => (todo.completed = event.target.checked));
+    },
   },
 };
 </script>
@@ -182,20 +181,4 @@ export default {
   margin: 0 10px;
 }
 
-button {
-  font-size: 14px;
-  background-color: #fff;
-  appearance: none;
-
-  &:hover {
-    background: lightgreen;
-  }
-  &:focus {
-    outline: none;
-  }
-}
-
-.active {
-  background: lightgreen;
-}
 </style>  
