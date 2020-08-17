@@ -8,8 +8,24 @@
       @keyup.enter="addTodo"
     />
     <div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">
-      <div>{{ todo.title }}</div>
-      <div class="remove-item" @click="removeTodo(index)" >&times;</div>
+      <div class="todo-item-main">
+        <div
+          class="todo-item-label"
+          v-if="!todo.editing"
+          @dblclick="editTodo(todo)"
+        >{{ todo.title }}</div>
+        <input
+          class="todo-item-edit"
+          type="text"
+          v-model="todo.title"
+          v-else
+          v-focus
+          @blur="doneTodo(todo)"
+          @keyup.enter="doneTodo(todo)"
+          @keyup.esc="cancelEdit(todo)"
+        />
+      </div>
+      <div class="remove-item" @click="removeTodo(index)">&times;</div>
     </div>
   </div>
 </template>
@@ -20,20 +36,30 @@ export default {
   data() {
     return {
       newTodo: "",
+      unedited: "",
       idForTodo: 3,
       todos: [
         {
           id: 1,
           title: "Finish Electron Recorder",
           completed: false,
+          editing: false,
         },
         {
           id: 2,
           title: "Make Tailwind App",
           completed: false,
+          editing: false,
         },
       ],
     };
+  },
+  directives: {
+    focus: {
+      inserted: function (el) {
+        el.focus();
+      },
+    },
   },
   methods: {
     addTodo() {
@@ -43,14 +69,25 @@ export default {
         id: this.idForTodo,
         title: this.newTodo,
         completed: false,
+        editing: false,
       });
       this.newTodo = "";
       this.idForTodo++;
     },
-
-    removeTodo(index){
-      this.todos.splice(index,1);
-    }
+    editTodo(todo) {
+      this.unedited = todo.title;
+      todo.editing = true;
+    },
+    doneTodo(todo) {
+      todo.editing = false;
+    },
+    cancelEdit(todo) {
+      todo.editing = false;
+      todo.title = this.unedited;
+    },
+    removeTodo(index) {
+      this.todos.splice(index, 1);
+    },
   },
 };
 </script>
@@ -62,7 +99,7 @@ export default {
   padding: 10px 18px;
   margin-bottom: 20px;
   font-size: 18px;
-  
+
   &:focus {
     outline: 0;
   }
@@ -77,9 +114,31 @@ export default {
 
 .remove-item {
   cursor: pointer;
-  padding:0 7px;
+  padding: 0 7px;
   &:hover {
     font-weight: bold;
+  }
+}
+
+.todo-item-main {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.todo-item-label {
+  padding: 10px;
+  border: 1px solid white;
+}
+
+.todo-item-edit {
+  font-size: 18px;
+  padding: 10px;
+  width: 100%;
+  color: #2c3e50;
+  border: 1px solid #ccc;
+  &:focus {
+    outline: none;
   }
 }
 </style>  
