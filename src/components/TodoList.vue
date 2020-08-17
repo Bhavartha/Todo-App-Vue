@@ -9,8 +9,10 @@
     />
     <div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">
       <div class="todo-item-main">
+        <input type="checkbox" v-model="todo.completed">
         <div
           class="todo-item-label"
+          :class={completed:todo.completed}
           v-if="!todo.editing"
           @dblclick="editTodo(todo)"
         >{{ todo.title }}</div>
@@ -79,6 +81,9 @@ export default {
       todo.editing = true;
     },
     doneTodo(todo) {
+      if (!todo.title.trim().length) {
+        todo.title = this.unedited;
+      }
       todo.editing = false;
     },
     cancelEdit(todo) {
@@ -141,4 +146,10 @@ export default {
     outline: none;
   }
 }
+
+.completed{
+  text-decoration: line-through;
+  color: gray;
+}
+
 </style>  
