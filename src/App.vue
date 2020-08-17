@@ -1,6 +1,9 @@
 <template>
   <div id="app" class="container">
-    <img src="https://image.flaticon.com/icons/svg/748/748646.svg" class="logo" />
+    <div class="logo">
+      <img src="https://image.flaticon.com/icons/svg/748/748646.svg" />
+      <div>TODO</div>
+    </div>
     <TodoList />
   </div>
 </template>
@@ -18,7 +21,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 * {
   box-sizing: border-box;
 }
@@ -29,16 +32,26 @@ export default {
 }
 
 .logo {
+  display:flex;
+  align-items: flex-end;
+  justify-content: center;
   margin: 20px auto;
-  height: 75px;
-  display: block;
+  img {
+    max-width: 80px;
+    display: block;
+    margin-right: 20px;
+  }
+  div{
+    font-size: 30px;
+    font-weight: bolder;
+  }
 }
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
+  font-size: 18px;
   color: #2c3e50;
   margin-top: 60px;
 }
